@@ -2,6 +2,8 @@ package me.vitorvigano.chucknorrisjokes.ui
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +14,20 @@ import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.vitorvigano.chucknorrisjokes.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.random.Random
 
 
 class MainFragment : Fragment() {
 
     private val vm: MainViewModel by viewModel()
+    private lateinit var filter: ColorMatrixColorFilter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val matrix = ColorMatrix()
+        matrix.setSaturation(0f)
+        filter = ColorMatrixColorFilter(matrix)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,25 +45,29 @@ class MainFragment : Fragment() {
     }
 
     private fun setupActions() {
-        load_more.setOnClickListener {
-            load_more.isEnabled = false
+        im_chuck_norris.setOnClickListener {
+            im_chuck_norris.isEnabled = false
+            isChuckNorrisColored(false)
             vm.onLoadMoreClick()
         }
         whatsapp_share.setOnClickListener {
-            launchWhatApp()
+            share("com.whatsapp")
+        }
+        insta_share.setOnClickListener {
+            share("com.instagram.android")
         }
     }
 
-    private fun launchWhatApp() {
-        val whatsappIntent = Intent(Intent.ACTION_SEND)
-        whatsappIntent.type = "text/plain"
-        whatsappIntent.setPackage("com.whatsapp")
-        whatsappIntent.putExtra(Intent.EXTRA_TEXT, joke_value.text.toString())
+    private fun share(appPackage:String) {
+        val appIntent = Intent(Intent.ACTION_SEND)
+        appIntent.type = "text/plain"
+        appIntent.setPackage(appPackage)
+        appIntent.putExtra(Intent.EXTRA_TEXT, joke_value.text.toString())
         try {
-            startActivity(whatsappIntent)
+            startActivity(appIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(
-                requireContext(), "There is no whatsapp installed",
+                requireContext(), "Chuck Norris cannot find this app",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -62,11 +76,17 @@ class MainFragment : Fragment() {
     private fun getLastJoke() {
         vm.lastJoke.observe(viewLifecycleOwner, Observer { joke ->
             joke?.let {
-                load_more.isEnabled = true
-                val labels = resources.getStringArray(R.array.load_more_labels_array)
-                load_more.text = labels[Random.nextInt(0, labels.size)]
+                im_chuck_norris.isEnabled = true
+                isChuckNorrisColored(true)
                 joke_value.text = joke.value
             }
         })
+    }
+
+    private fun isChuckNorrisColored(colored: Boolean) {
+        if (colored)
+            im_chuck_norris.colorFilter = null
+        else
+            im_chuck_norris.colorFilter = filter
     }
 }
