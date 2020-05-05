@@ -1,4 +1,4 @@
-package me.vitorvigano.chucknorrisjokes
+package me.vitorvigano.chucknorrisjokes.domain
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
