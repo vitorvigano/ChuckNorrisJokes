@@ -5,20 +5,11 @@
     android:orientation="vertical"
     android:padding="@dimen/default_margin">
 
-    <!--
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="@dimen/avatar_size"
-        android:layout_height="@dimen/avatar_size"
-        android:contentDescription="@string/avatar"
-        android:scaleType="centerCrop"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> -->
-
     <TextView
         android:id="@+id/value"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aldrich" />
 
 </LinearLayout>

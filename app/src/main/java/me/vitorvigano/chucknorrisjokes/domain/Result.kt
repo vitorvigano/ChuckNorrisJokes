@@ -1,4 +1,4 @@
-package me.vitorvigano.chucknorrisjokes
+package me.vitorvigano.chucknorrisjokes.domain
 
 sealed class Result<out T : Any> {
 

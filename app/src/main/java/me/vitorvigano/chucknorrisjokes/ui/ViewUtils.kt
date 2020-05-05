@@ -1,4 +1,4 @@
-package me.vitorvigano.chucknorrisjokes
+package me.vitorvigano.chucknorrisjokes.ui
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">ChuckNorrisJokes</string>
     <string name="avatar">Avatar</string>
+    <string name="chuck_norris">Chuck Norris</string>
+    <string name="dummy_joke">Chuck Norris can just wright a random number and the math problem is right</string>
+    <string name="go_norris">GO NORRIS</string>
+    <string name="share_whatsapp">Share WhatsApp</string>
+    <string-array name="load_more_labels_array">
+        <item>This is awesome</item>
+        <item>I can\'t stop</item>
+        <item>Help me</item>
+        <item>Go Norris</item>
+        <item>OMG</item>
+        <item>Get me out of here</item>
+    </string-array>
 </resources>

@@ -1,7 +1,9 @@
-package me.vitorvigano.chucknorrisjokes
+package me.vitorvigano.chucknorrisjokes.data
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import me.vitorvigano.chucknorrisjokes.domain.Joke
+import me.vitorvigano.chucknorrisjokes.domain.Result
 
 class JokesRepository(private val dao: JokeDao, private val api: ChuckNorrisApi) {
 
@@ -17,4 +19,14 @@ class JokesRepository(private val dao: JokeDao, private val api: ChuckNorrisApi)
             emitAll(dao.getJokes().map { Result.Success(it) })
         }
     }
+
+    suspend fun getJoke(): Result<Long> {
+        return try {
+            Result.Success(dao.addJoke(api.get()))
+        } catch (e: Exception) {
+            Result.Error(e.message ?: "Unknown error")
+        }
+    }
+
+    fun getLastJokeFromCache() = dao.getLastJoke()
 }
