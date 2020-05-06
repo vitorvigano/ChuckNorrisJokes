@@ -47,7 +47,7 @@
             android:layout_marginStart="@dimen/double_margin"
             android:background="@drawable/ic_instagram"
             android:backgroundTint="@android:color/white"
-            android:contentDescription="@string/share_whatsapp" />
+            android:contentDescription="@string/share_insta" />
 
     </LinearLayout>
 

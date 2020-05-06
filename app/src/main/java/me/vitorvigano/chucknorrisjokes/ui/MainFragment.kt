@@ -12,10 +12,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import me.vitorvigano.chucknorrisjokes.R
+import me.vitorvigano.chucknorrisjokes.domain.Result
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
+@ExperimentalCoroutinesApi
 class MainFragment : Fragment() {
 
     private val vm: MainViewModel by viewModel()
@@ -41,14 +43,14 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupActions()
-        getLastJoke()
+        subscribeObservers()
     }
 
     private fun setupActions() {
         im_chuck_norris.setOnClickListener {
             im_chuck_norris.isEnabled = false
             isChuckNorrisColored(false)
-            vm.onLoadMoreClick()
+            vm.getNewJoke()
         }
         whatsapp_share.setOnClickListener {
             share("com.whatsapp")
@@ -58,7 +60,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun share(appPackage:String) {
+    private fun share(appPackage: String) {
         val appIntent = Intent(Intent.ACTION_SEND)
         appIntent.type = "text/plain"
         appIntent.setPackage(appPackage)
@@ -73,14 +75,30 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun getLastJoke() {
+    private fun subscribeObservers() {
         vm.lastJoke.observe(viewLifecycleOwner, Observer { joke ->
-            joke?.let {
+            val value = joke?.value ?: getString(R.string.empty_message)
+            im_chuck_norris.isEnabled = true
+            isChuckNorrisColored(true)
+            joke_value.text = value
+        })
+        vm.newJoke.observe(viewLifecycleOwner, Observer { result ->
+            handleResult(result)
+        })
+    }
+
+    private fun handleResult(result: Result<Long>) {
+        when (result) {
+            is Result.Error -> {
                 im_chuck_norris.isEnabled = true
                 isChuckNorrisColored(true)
-                joke_value.text = joke.value
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        })
+        }
     }
 
     private fun isChuckNorrisColored(colored: Boolean) {

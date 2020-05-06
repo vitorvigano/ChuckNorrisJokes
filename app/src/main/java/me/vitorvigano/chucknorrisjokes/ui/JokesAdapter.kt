@@ -2,8 +2,8 @@ package me.vitorvigano.chucknorrisjokes.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import me.vitorvigano.chucknorrisjokes.domain.Joke
 import me.vitorvigano.chucknorrisjokes.R
+import me.vitorvigano.chucknorrisjokes.domain.Joke
 
 class JokesAdapter(private val jokes: List<Joke>) : RecyclerView.Adapter<JokesViewHolder>() {
 

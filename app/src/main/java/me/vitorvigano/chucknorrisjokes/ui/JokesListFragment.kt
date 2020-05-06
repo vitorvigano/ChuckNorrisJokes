@@ -31,13 +31,19 @@ class JokesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupActions()
         getJokes()
+    }
+
+    private fun setupActions() {
+        swipe.setOnRefreshListener { vm.getJokes(true) }
     }
 
     private fun getJokes() {
         vm.jokes.observe(viewLifecycleOwner, Observer { result ->
             handleResult(result)
         })
+        vm.getJokes(false)
     }
 
     private fun handleResult(result: Result<List<Joke>>) {
@@ -53,9 +59,10 @@ class JokesListFragment : Fragment() {
                 }
             }
             is Result.Error -> {
+                swipe.isRefreshing = false
                 Toast.makeText(
                     requireContext(),
-                    "Chuck Norris doesn't like errors",
+                    getString(R.string.error),
                     Toast.LENGTH_SHORT
                 ).show()
             }

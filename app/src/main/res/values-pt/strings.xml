@@ -3,8 +3,8 @@
     <string name="avatar">Avatar</string>
     <string name="chuck_norris">Chuck Norris</string>
     <string name="dummy_joke">Chuck Norris can just wright a random number and the math problem is right</string>
-    <string name="share_whatsapp">Share on WhatsApp</string>
-    <string name="share_insta">Share on Instagram</string>
-    <string name="empty_message">NO JOKE YET, TAP ON NORRIS</string>
-    <string name="error">Error. Chuck Norris doesn\'t like errors.</string>
+    <string name="share_whatsapp">Compartilhe no WhatsApp</string>
+    <string name="share_insta">Compartilhe no Instagram</string>
+    <string name="empty_message">TAP NO NORRIS</string>
+    <string name="error">Erro, Chuck Norris não gosta de erros</string>
 </resources>
