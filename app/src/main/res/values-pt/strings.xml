@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChuckNorrisJokes</string>
+    <string name="app_name">Chuck Norris Jokes</string>
     <string name="avatar">Avatar</string>
     <string name="chuck_norris">Chuck Norris</string>
     <string name="dummy_joke">Chuck Norris can just wright a random number and the math problem is right</string>
